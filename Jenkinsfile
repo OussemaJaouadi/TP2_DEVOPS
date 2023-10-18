@@ -1,5 +1,5 @@
 pipeline {
-    agent docker_agent
+    agent any
     stages {
         stage("Pulling code") {
             steps {
