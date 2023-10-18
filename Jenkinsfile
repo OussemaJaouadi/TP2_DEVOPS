@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_HUB = credentials('dockerhub')
+    }
     stages {
         stage("Pulling code") {
             steps {
