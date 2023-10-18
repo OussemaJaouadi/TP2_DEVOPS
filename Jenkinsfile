@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage("Pulling code") {
             steps {
-                git url: 'https://github.com/OussemaJaouadi/TP2_DEVOPS/', branch: 'master',
+                git url: 'https://github.com/OussemaJaouadi/TP2_DEVOPS/', branch: 'main',
                 sh "ls -ltr"
             }
         }
