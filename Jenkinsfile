@@ -1,39 +1,41 @@
-pipeline{
+pipeline {
     agent any
-    stages{
+    stages {
         stage("Pulling code") {
             steps {
-                git url: 'https://github.com/OussemaJaouadi/TP2_DEVOPS/', branch: 'main',
+                git branch: 'main', url: 'https://github.com/OussemaJaouadi/TP2_DEVOPS/'
                 sh "ls -ltr"
             }
         }
-        // Usually some test are integrated here
-       //build de l'image
-         stage("Build the image"){
-            steps {                
+        
+        stage("Build the image") {
+            steps {
                 script {
-                        sh "docker build -t devopstp ."
-                        sh "docker images"
-                       }            
-                        }
-                    } 
-        stage("Pushing Image") {
-            steps {                
-                script {
-                        sh "echo $DOCKER_HUB"
-                        //sh "docker tag devopstp oussemajaouadi/tp_devops:$BUILD_NUMBER"
-                        //sh "docker push oussemajaouadi/tp_devops:$BUILD_NUMBER"
-                           }        
-                        }
-                    }              
-                }
-            post{
-                success{
-                    echo "======== Setting up infra executed successfully ========"
-                }
-                failure{
-                    echo "======== Setting up infra execution failed ========"
+                    sh "docker build -t devopstp ."
+                    sh "docker images"
                 }
             }
-             
-        }        
+        }
+        
+        stage("Pushing Image") {
+            steps {
+                script {
+                    sh "echo $DOCKER_HUB"
+                    // Uncomment the following lines once you have the correct DockerHub credentials configured in Jenkins
+                    // sh "docker login -u your-dockerhub-username -p your-dockerhub-password"
+                    // sh "docker tag devopstp your-dockerhub-username/tp_devops:$BUILD_NUMBER"
+                    // sh "docker push your-dockerhub-username/tp_devops:$BUILD_NUMBER"
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo "======== Setting up infra executed successfully ========"
+        }
+        failure {
+            echo "======== Setting up infra execution failed ========"
+        }
+    }
+}
