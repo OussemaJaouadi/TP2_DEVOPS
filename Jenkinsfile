@@ -23,11 +23,11 @@ pipeline {
         stage("Pushing Image") {
             steps {
                 script {
-                    sh "echo $DOCKER_HUB"
+                    //sh "echo $DOCKER_HUB"
                     // Uncomment the following lines once you have the correct DockerHub credentials configured in Jenkins
-                    // sh "docker login -u your-dockerhub-username -p your-dockerhub-password"
-                    // sh "docker tag devopstp your-dockerhub-username/tp_devops:$BUILD_NUMBER"
-                    // sh "docker push your-dockerhub-username/tp_devops:$BUILD_NUMBER"
+                    sh "docker login -u $DOCKER_HUB_USR -p $DOCKER_HUB_PSW"
+                    sh "docker tag devopstp your-dockerhub-username/tp_devops:$BUILD_NUMBER"
+                    sh "docker push your-dockerhub-username/tp_devops:$BUILD_NUMBER"
                 }
             }
         }
