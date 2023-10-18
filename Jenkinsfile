@@ -13,14 +13,16 @@ pipeline{
             steps {                
                 script {
                         sh "docker build -t devopstp ."
+                        sh "docker images"
                        }            
                         }
                     } 
         stage("Pushing Image") {
             steps {                
                 script {
-                        sh "docker tag devopstp oussemajaouadi/tp_devops:$BUILD_NUMBER"
-                        sh "docker push oussemajaouadi/tp_devops:$BUILD_NUMBER"
+                        sh "echo $DOCKER_HUB"
+                        //sh "docker tag devopstp oussemajaouadi/tp_devops:$BUILD_NUMBER"
+                        //sh "docker push oussemajaouadi/tp_devops:$BUILD_NUMBER"
                            }        
                         }
                     }              
