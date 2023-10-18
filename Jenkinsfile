@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            label : "docker_agent"
+            label "docker_agent"
         }
     }
     stages {
