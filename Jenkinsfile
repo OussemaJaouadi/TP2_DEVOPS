@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            label : "docker_agent"
+        }
+    }
     stages {
         stage("Pulling code") {
             steps {
