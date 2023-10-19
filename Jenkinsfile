@@ -25,7 +25,8 @@ pipeline {
                 script {
                     //sh "echo $DOCKER_HUB"
                     // Uncomment the following lines once you have the correct DockerHub credentials configured in Jenkins
-                    sh "docker push devopstp oussemajaouadi/tp_devops:$BUILD_NUMBER"
+                    sh "docker tag devopstp oussemajaouadi/tp_devops:$BUILD_NUMBER"
+                    sh "docker push oussemajaouadi/tp_devops:$BUILD_NUMBER"
                 }
             }
         }
