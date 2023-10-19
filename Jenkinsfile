@@ -15,7 +15,7 @@ pipeline {
         stage("Build the image") {
             steps {
                 script {
-                    dockerImage = docker.build("devopstp:$BUILD_NUMBER")
+                    sh "docker build -t devopstp ."
                 }
             }
         }
@@ -25,11 +25,7 @@ pipeline {
                 script {
                     //sh "echo $DOCKER_HUB"
                     // Uncomment the following lines once you have the correct DockerHub credentials configured in Jenkins
-                    withDockerRegistry(
-                        [credentialsId:"dockerhub",url:""]
-                    ){
-                        dockerImage.push("oussemajaouadi/tp_devops:$BUILD_NUMBER")
-                    }
+                    sh "docker push devopstp oussemajaouadi/tp_devops:$BUILD_NUMBER"
                 }
             }
         }
