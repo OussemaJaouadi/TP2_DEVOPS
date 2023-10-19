@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB = credentials('dockerhub')
+        dockerImage= ""
     }
     stages {
         stage("Pulling code") {
@@ -14,8 +15,7 @@ pipeline {
         stage("Build the image") {
             steps {
                 script {
-                    sh "docker build -t devopstp ."
-                    sh "docker images"
+                    dockerImage = docker.build("devopstp:$BUILD_NUMBER")
                 }
             }
         }
@@ -25,9 +25,11 @@ pipeline {
                 script {
                     //sh "echo $DOCKER_HUB"
                     // Uncomment the following lines once you have the correct DockerHub credentials configured in Jenkins
-                    sh 'echo $DOCKER_HUB_PSW | docker login -u $DOCKER_HUB__USR --password-stdin'
-                    sh "docker tag devopstp $DOCKER_HUB_USR/tp_devops:$BUILD_NUMBER"
-                    sh "docker push $DOCKER_HUB_USRe/tp_devops:$BUILD_NUMBER"
+                    withDockerRegistry(
+                        [credentialsId:"dockerhub",url:""]
+                    ){
+                        dockerImage.push("oussemajaouadi/tp_devops:$BUILD_NUMBER")
+                    }
                 }
             }
         }
